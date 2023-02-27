@@ -1,5 +1,7 @@
 import typing
 import discord, random
+import dotenv
+dotenv.load_dotenv()
 import os # default module
 from discord import option
 bot = discord.Bot(
@@ -32,4 +34,17 @@ async def names(ctx):
     arr.append(ctx.author.name)
     await ctx.respond(arr)
 
-bot.run("MTA3ODU0NDU3NDE5NDE0MzMxMg.G9A1_6.FivHqe02lqJqwMsyHjw0PJZhdZtRGhKpSaktdA") # run the bot with the token
+@bot.slash_command()
+async def ping(ctx):
+    await ctx.respond(f"Pong! {bot.latency * 1000}ms")
+
+@bot.slash_command()
+async def embedtest(ctx):
+    embed = discord.Embed(
+        title = "Hello",
+        description = "This is a test embed",
+        color = discord.Color(0xFF00FF),
+    )
+    await ctx.respond(embed = embed, content = "HI", ephemeral = False)
+token=os.getenv("TOKEN")
+bot.run(token) # run the bot with the token
